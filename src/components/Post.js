@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { db, auth } from '../firebase/config'
 import firebase from 'firebase';
 
@@ -66,6 +66,7 @@ export default class Post extends Component{
                 <Text>Comentario: {this.props.description}</Text>
                 <Text>Dia creado: {this.props.createdAt}</Text>
                 <Text>Usuario: {this.props.owner}</Text>
+                <Image source = {this.props.photo} style = {style.imagen}/>
                 {this.state.liked === false ?
                 <TouchableOpacity style={style.botonLike} onPress={()=>this.likeando()}>
                     <Text>Me gusta</Text>
@@ -100,6 +101,9 @@ const style = StyleSheet.create({
         borderStyle: 'solid',
         borderColor: '#28a745',
         width: '40%',
+        marginTop: 10,
+        marginLeft: 104,
+        marginBottom: 8
     },
     botonDeslike: {
         backgroundColor: 'red',
@@ -111,5 +115,14 @@ const style = StyleSheet.create({
         borderStyle: 'solid',
         borderColor: '#28a745',
         width: '40%',
+        marginTop: 10,
+        marginLeft: 104,
+        marginBottom: 8
+    },
+    imagen: {
+        height: 205,
+        width: '80%',
+        position: 'relative',
+        marginLeft: 34
     }
 })

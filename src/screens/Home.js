@@ -59,6 +59,7 @@ export default class Home extends Component{
                 owner = {item.data.owner}
                 id = {item.id}
                 likes = {item.data.likes}
+                photo = {item.data.photo}
                 />}
                 />
                 

@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View, TextInput } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View, TextInput, Image } from 'react-native'
 import { auth, db } from '../firebase/config'
+import MyCamera from '../components/MyCamera'
 
 export default class CreatePost extends Component{
     constructor(props){
         super(props)
         this.state = {
-            comment: ''
+            comment: '',
+            photo: '',
+            showCamera: true
         }
     }
 
@@ -17,7 +20,8 @@ export default class CreatePost extends Component{
             createdAt: Date.now(),
             likes: [],
             comments: [],
-            email: auth.currentUser.email
+            email: auth.currentUser.email,
+            photo: this.state.photo
         })
         .then(response => {
             console.log(response);
@@ -33,9 +37,21 @@ export default class CreatePost extends Component{
         })
     }
 
+    guardarFoto(url){
+        this.setState({
+            photo: url,
+            showCamera: false
+        })
+    }
+
     render(){
         return(
+            <>
+            {this.state.showCamera ?
+            <MyCamera onImageUpload={(url)=>this.guardarFoto(url)}/>
+            :
             <View style={style.container}>
+                <Image source = {{uri:this.state.photo}} style = {style.imagen}/>
             <TextInput
                     style={style.field}
                     keyboardType='default'
@@ -48,9 +64,9 @@ export default class CreatePost extends Component{
             <TouchableOpacity onPress={()=>this.handlePost()} style ={style.boton}>
             <Text>Postea!</Text>
             </TouchableOpacity>
-            </View>    
-            
-
+            </View>  
+            }
+            </>
         )
     }
 }
@@ -79,5 +95,9 @@ const style = StyleSheet.create({
         borderWidth: 1,
         borderStyle: 'solid',
         borderColor: '#28a745'
+    },
+    imagen: {
+        height: 200,
+        whith: '80%'
     }
 })
