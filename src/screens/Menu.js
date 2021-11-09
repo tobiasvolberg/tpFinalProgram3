@@ -24,7 +24,7 @@ export default class Menu extends Component {
         auth.createUserWithEmailAndPassword(email, password)
         .then((response)=> {
             console.log(response);
-            alert('ususario regsitrado')
+            alert(`Tu nuevo nombre de usuario es: ${username}`)
             response.user.updateProfile({
                 displayName: username
             })
@@ -48,7 +48,7 @@ export default class Menu extends Component {
         auth.signInWithEmailAndPassword(email, password)
         .then((response)=> {
             console.log(response);
-            alert('ususario logueado')
+            alert(`Bienvenido`)
             this.setState({
                 loggedIn:true,
                 fecha: response.user.metadata.creationTime,
