@@ -1,9 +1,44 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native'
+import { db } from '../firebase/config'
 
 export default class Profile extends Component{
     constructor(props){
         super(props)
+        this.state = {
+            posteos: [],
+            loading: true
+        }
+    }
+
+    componentDidMount(){
+        db.collection('posts')
+        .where('email','==',this.props.mail)
+        .orderBy('createdAt', 'desc')
+        .onSnapshot(
+            docs => {
+                let posts = []
+                docs.forEach( doc => {
+                    posts.push({
+                        id: doc.id,
+                        data: doc.data()
+                    })
+                })
+                console.log(posts);
+                this.setState({
+                    posteos: posts,
+                    loading: false
+                })
+            }
+        )
+    }
+
+    borrarPost(item){
+        db.collection("posts").doc(item.id).delete().then(() => {
+            console.log("Document successfully deleted!");
+        }).catch((error) => {
+            console.error("Error removing document: ", error);
+        });
     }
 
 
@@ -14,6 +49,19 @@ export default class Profile extends Component{
                 <Text>El email del usuario es: {this.props.mail}</Text>
                 <Text>La fecha del ultimo login del usuario es: {this.props.ultFecha}</Text>
                 <Text>La fecha de alta del usuario es: {this.props.fecha}</Text>
+                <Text>Posteos realizados por el usuario:</Text>
+                <FlatList
+                data = {this.state.posteos}
+                keyExtractor = {item => item.id.toString()}
+                renderItem = {({item}) => <View style={style.posteos}>
+                    <Text>{item.data.description}</Text>
+                <TouchableOpacity onPress={(item)=>this.borrarPost(item)}>
+                    <Text style={style.botonBorrar}>Borrar</Text>
+                </TouchableOpacity>
+                </View>}
+                
+                />
+                
                 <TouchableOpacity onPress={()=>this.props.unLog()}>
                     <Text style={style.boton}>Unlog</Text>
                 </TouchableOpacity>
@@ -32,5 +80,26 @@ const style = StyleSheet.create({
         borderWidth: 1,
         borderStyle: 'solid',
         borderColor: '#28a745'
+    },
+    botonBorrar: {
+        backgroundColor: 'red',
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        textAlign: 'center',
+        borderRadius: 4,
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderColor: 'red',
+        width: '50%',
+        position:'relative',
+        marginLeft: '25%'
+    },
+    posteos:{
+        textAlign:'center',
+        padding: 10,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderStyle: 'solid',
+        borderRadius: 6,
     }
 })

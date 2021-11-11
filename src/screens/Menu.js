@@ -16,7 +16,8 @@ export default class Menu extends Component {
             fecha: '',
             mail: '',
             ultFecha: '',
-            error: ''
+            error: '',
+            username: ''
         }
     }
 
@@ -32,7 +33,8 @@ export default class Menu extends Component {
                 loggedIn:true,
                 fecha: response.user.metadata.creationTime,
                 mail: response.user.email,
-                ultFecha: response.user.metadata.lastSignInTime
+                ultFecha: response.user.metadata.lastSignInTime,
+                username: response.user.displayName
             })
         })
         .catch( error => {
@@ -53,7 +55,8 @@ export default class Menu extends Component {
                 loggedIn:true,
                 fecha: response.user.metadata.creationTime,
                 mail: response.user.email,
-                ultFecha: response.user.metadata.lastSignInTime
+                ultFecha: response.user.metadata.lastSignInTime,
+                username: response.user.displayName
             })
         })
         .catch( error => {
@@ -92,7 +95,7 @@ export default class Menu extends Component {
               <Drawer.Screen name='Home' component={()=><Home />}></Drawer.Screen>
               <Drawer.Screen name="Profile">
                   {props => <Profile {...props} fecha={this.state.fecha} mail={this.state.mail}
-                  ultFecha={this.state.ultFecha}
+                  ultFecha={this.state.ultFecha} username={this.state.username}
                   unLog={()=>this.unLog()}
                   />}
               </Drawer.Screen>
