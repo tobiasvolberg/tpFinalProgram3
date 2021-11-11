@@ -34,6 +34,7 @@ export default class Profile extends Component{
     }
 
     borrarPost(item){
+        console.log(item);
         db.collection("posts").doc(item.id).delete().then(() => {
             console.log("Document successfully deleted!");
         }).catch((error) => {
@@ -55,7 +56,7 @@ export default class Profile extends Component{
                 keyExtractor = {item => item.id.toString()}
                 renderItem = {({item}) => <View style={style.posteos}>
                     <Text>{item.data.description}</Text>
-                <TouchableOpacity onPress={(item)=>this.borrarPost(item)}>
+                <TouchableOpacity onPress={()=>this.borrarPost(item)}>
                     <Text style={style.botonBorrar}>Borrar</Text>
                 </TouchableOpacity>
                 </View>}
