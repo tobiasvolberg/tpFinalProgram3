@@ -34,13 +34,13 @@ export default class Login extends Component {
                 {this.state.email=='' || this.state.password=='' ?
                 
                 <TouchableOpacity style = {styles.buttongris}>
-                    <Text style = {styles.text}> Login </Text>
+                    <Text style = {styles.text}> Iniciar sesion </Text>
                 </TouchableOpacity>
 
                 :
                 
                 <TouchableOpacity style = {styles.button} onPress={() => this.props.handleLogin(this.state.email,this.state.password)}>
-                    <Text style = {styles.text}> Login </Text>
+                    <Text style = {styles.text}> Iniciar sesion </Text>
                 </TouchableOpacity>
                 
                 }

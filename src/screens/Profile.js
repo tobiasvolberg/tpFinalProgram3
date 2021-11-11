@@ -10,6 +10,7 @@ export default class Profile extends Component{
     render(){
         return(
             <View>
+                <Text>El nombre del usuario es: {this.props.username}</Text>
                 <Text>El email del usuario es: {this.props.mail}</Text>
                 <Text>La fecha del ultimo login del usuario es: {this.props.ultFecha}</Text>
                 <Text>La fecha de alta del usuario es: {this.props.fecha}</Text>

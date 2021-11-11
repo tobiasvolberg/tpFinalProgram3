@@ -55,7 +55,7 @@ export default class CreatePost extends Component{
             <TextInput
                     style={style.field}
                     keyboardType='default'
-                    placeholder="What are you thinking?"
+                    placeholder="Agrega una descipcion"
                     multiline={true}
                     numberOfLines = {4}
                     onChangeText={text => this.setState({ comment: text })}

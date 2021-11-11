@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View, TextInput } from "react-native";
 import { db, auth } from '../firebase/config'
 import firebase from 'firebase';
 
@@ -9,7 +9,9 @@ export default class Post extends Component{
         super(props)
         this.state = {
             likes: 0,
-            liked: false
+            liked: false,
+            comments: '',
+            comented: false
         }
     }
     componentDidMount(){
@@ -23,7 +25,16 @@ export default class Post extends Component{
                 likes: this.props.likes.length
             })
         }
-        
+        if (this.props.comments ) {
+            if (this.props.comments.includes(auth.currentUser.email)) {
+                this.setState({
+                    comented:true,
+                })
+            }
+            this.setState({
+                comments: this.props.comments
+            })
+        }
     }
 
     likeando(){
@@ -59,6 +70,23 @@ export default class Post extends Component{
             console.error("Error updating document: ", error);
         });
     }
+
+    comentando(){
+        let comentarios = db.collection("posts").doc(this.props.id)
+        return comentarios.update({
+            comments: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email)
+        })
+        .then(() => {
+            console.log("Comentario okey!");
+            this.setState({
+                comments: this.state.comments,
+                comented: true
+            })
+        })
+        .catch((error) => {
+            console.error("Error updating document: ", error);
+        });
+    }
     render(){
         console.log(this.props);
         return(
@@ -74,8 +102,21 @@ export default class Post extends Component{
                 <TouchableOpacity style={style.botonDeslike} onPress={()=>this.deslikeando()}>
                     <Text>Deslikear</Text>
                 </TouchableOpacity>
-            }
+                }
             <Text>Likes: {this.state.likes}</Text>
+            <Text>Comentarios: {this.state.comments}</Text>
+            <TextInput
+                    style={style.field}
+                    keyboardType='default'
+                    placeholder="Ingresa tu comentario"
+                    multiline={true}
+                    numberOfLines = {4}
+                    onChangeText={text => this.setState({ comments: text })}
+                    value = {this.state.comments}
+                    />
+            <TouchableOpacity style={style.botonLike} onPress={()=>this.comentando()}>
+                    <Text>Comentar</Text>
+                </TouchableOpacity>
             </View>
         )
     }
@@ -118,6 +159,15 @@ const style = StyleSheet.create({
         marginTop: 10,
         marginLeft: 104,
         marginBottom: 8
+    },
+    field: {
+        paddingVertical: 15,
+        paddingHorizontal:10,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderStyle: 'solid',
+        borderRadius: 6,
+        marginVertical: 10
     },
     imagen: {
         height: 205,

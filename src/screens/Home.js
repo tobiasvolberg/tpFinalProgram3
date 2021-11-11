@@ -60,6 +60,7 @@ export default class Home extends Component{
                 id = {item.id}
                 likes = {item.data.likes}
                 photo = {item.data.photo}
+                comments = {item.data.comments}
                 />}
                 />
                 

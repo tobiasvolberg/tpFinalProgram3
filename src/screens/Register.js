@@ -44,14 +44,14 @@ export default class Register extends Component {
                     <TouchableOpacity 
                     style ={style.botongris}
                     >
-                       <Text style={style.textoBoton}> Registrate </Text>
+                       <Text style={style.textoBoton}> Registrarse </Text>
                     </TouchableOpacity>
 
                     :
                     <TouchableOpacity onPress = {()=>this.props.handleRegister(this.state.email, this.state.password, this.state.username)}
                     style ={style.boton}
                     >
-                       <Text style={style.textoBoton}> Registrate </Text>
+                       <Text style={style.textoBoton}> Registrarse </Text>
                     </TouchableOpacity>
                     }
                     
