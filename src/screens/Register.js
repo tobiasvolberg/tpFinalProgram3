@@ -21,28 +21,41 @@ export default class Register extends Component {
                     <TextInput 
                     style = {style.textInput}
                     keyboardType='email-adress'
-                    placeholder = 'email'
+                    placeholder = 'Ingrese su Mail'
                     onChangeText = {text => this.setState({email:text})}
                     />
                     <Text>User Name</Text>
                     <TextInput 
                     style = {style.textInput}
-                    placeholder = 'User name'
+                    placeholder = 'Nombre de usuario'
                     onChangeText = {text => this.setState({username:text})}
                     />
                     <Text>Password</Text>
                     <TextInput 
                     style = {style.textInput}
                     keyboardType='password'
-                    placeholder = 'Password'
+                    placeholder = 'Contraseña'
                     secureTextEntry = {true}
                     onChangeText = {text => this.setState({password:text})}
                     />
+
+                    {this.state.email=='' || this.state.username=='' || this.state.password=='' ? 
+                    
+                    <TouchableOpacity 
+                    style ={style.botongris}
+                    >
+                       <Text style={style.textoBoton}> Registrate </Text>
+                    </TouchableOpacity>
+
+                    :
                     <TouchableOpacity onPress = {()=>this.props.handleRegister(this.state.email, this.state.password, this.state.username)}
                     style ={style.boton}
                     >
                        <Text style={style.textoBoton}> Registrate </Text>
                     </TouchableOpacity>
+                    }
+                    
+
 
                     
                 
@@ -76,6 +89,16 @@ const style = StyleSheet.create({
         borderWidth: 1,
         borderStyle: 'solid',
         borderColor: '#28a745'
+    },
+    botongris: {
+        backgroundColor: 'grey',
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        textAlign: 'center',
+        borderRadius: 4,
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderColor: 'grey'
     },
     textoBoton: {
         color: '#fff'

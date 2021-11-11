@@ -20,19 +20,31 @@ export default class Login extends Component {
                 <TextInput
                     style={styles.field}
                     keyboardType="email-address"
-                    placeholder="email"
+                    placeholder="Ingrese su Mail"
                     onChangeText={text => this.setState({ email: text })}
                 />
                 <TextInput
                     style={styles.field}
                     keyboardType='number-pad'
-                    placeholder="password"
+                    placeholder="Ingrese su contraseña"
                     secureTextEntry={true}
                     onChangeText={text => this.setState({ password: text })}
                 />
+
+                {this.state.email=='' || this.state.password=='' ?
+                
+                <TouchableOpacity style = {styles.buttongris}>
+                    <Text style = {styles.text}> Login </Text>
+                </TouchableOpacity>
+
+                :
+                
                 <TouchableOpacity style = {styles.button} onPress={() => this.props.handleLogin(this.state.email,this.state.password)}>
                     <Text style = {styles.text}> Login </Text>
                 </TouchableOpacity>
+                
+                }
+
             </View>
         )
     }
@@ -63,6 +75,16 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderStyle: 'solid',
         borderColor: '#28a745'
+    },
+    buttongris: {
+        backgroundColor: 'grey',
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        textAlign: 'center',
+        borderRadius: 4,
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderColor: 'grey'
     },
     text: {
         color: '#fff'
