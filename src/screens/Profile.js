@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, FlatList, Image } from 'react-native'
 import { db } from '../firebase/config'
 
 export default class Profile extends Component{
@@ -36,9 +36,9 @@ export default class Profile extends Component{
     borrarPost(item){
         console.log(item);
         db.collection("posts").doc(item.id).delete().then(() => {
-            console.log("Document successfully deleted!");
+            alert('estas borrando tu posteo')
         }).catch((error) => {
-            console.error("Error removing document: ", error);
+            alert("Error: ", error);
         });
     }
 
@@ -50,12 +50,13 @@ export default class Profile extends Component{
                 <Text>El email del usuario es: {this.props.mail}</Text>
                 <Text>La fecha del ultimo login del usuario es: {this.props.ultFecha}</Text>
                 <Text>La fecha de alta del usuario es: {this.props.fecha}</Text>
-                <Text>Posteos realizados por el usuario:</Text>
+                <Text>Posteos realizados por el usuario: {this.state.posteos.length}</Text>
                 <FlatList
                 data = {this.state.posteos}
                 keyExtractor = {item => item.id.toString()}
                 renderItem = {({item}) => <View style={style.posteos}>
                     <Text>{item.data.description}</Text>
+                    <Image source = {item.data.photo} style = {style.imagen}/>
                 <TouchableOpacity onPress={()=>this.borrarPost(item)}>
                     <Text style={style.botonBorrar}>Borrar</Text>
                 </TouchableOpacity>
@@ -102,5 +103,11 @@ const style = StyleSheet.create({
         borderColor: '#ccc',
         borderStyle: 'solid',
         borderRadius: 6,
+    },
+    imagen: {
+        height: 205,
+        width: '80%',
+        position: 'relative',
+        marginLeft: 34
     }
 })
