@@ -40,13 +40,18 @@ export default class Buscador extends Component{
                 onChangeText={text => this.setState({ buscador: text })}
                 />
                 <TouchableOpacity onPress = {this.buscar()}>
-                    <Text>Buscar</Text>
+                    {/* <Text>Buscar</Text> */}
                 </TouchableOpacity>
-                <FlatList 
-                    data = {this.state.posteos}
-                    keyExtractor = {item => item.id.toString()}
-                    renderItem = {({item}) => <Text>{item.data.description}</Text> }
-                /> 
+               {this.state.posteos.length == 0?
+               <Text> El usuario no existe o no tiene ninguna publicación</Text> :
+               <FlatList 
+                   data = {this.state.posteos}
+                   keyExtractor = {item => item.id.toString()}
+                   renderItem = {({item}) => <Text>{item.data.description}</Text> }
+               /> 
+            
+            }
+               
             </View>
         )
     }
