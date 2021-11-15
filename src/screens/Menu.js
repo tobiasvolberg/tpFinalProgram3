@@ -7,6 +7,7 @@ import CreatePost from './CreatePost';
 import Profile from './Profile';
 import { auth } from '../firebase/config';
 import Home from './Home';
+import Buscador from './Buscador'
 
 export default class Menu extends Component {
     constructor(props){
@@ -101,6 +102,9 @@ export default class Menu extends Component {
               </Drawer.Screen>
               <Drawer.Screen name='Create Post'>
                   {props => <CreatePost {...props}/>}
+              </Drawer.Screen>
+              <Drawer.Screen name='Buscador'>
+                  {props => <Buscador {...props}/>}
               </Drawer.Screen>
               </React.Fragment>
               :
