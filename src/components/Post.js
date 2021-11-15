@@ -74,7 +74,9 @@ export default class Post extends Component{
     comentando(){
         let comentarios = db.collection("posts").doc(this.props.id)
         return comentarios.update({
-            comments: firebase.firestore.FieldValue.arrayUnion(this.state.comments)
+            comments: firebase.firestore.FieldValue.arrayUnion({comment: this.state.comments,
+            owner: auth.currentUser.email,
+            })
         })
         .then(() => {
             console.log("Comentario okey!");
@@ -102,11 +104,11 @@ export default class Post extends Component{
 
 
     render(){
-        console.log(this.props);
+        let d = new Date(this.props.createdAt)
         return(
             <View style = {style.container}>
                 <Text>Comentario: {this.props.description}</Text>
-                <Text>Dia creado: {this.props.createdAt}</Text>
+                <Text>Dia creado: {d.toDateString()}</Text>
                 <Text>Usuario: {this.props.owner}</Text>
                 <Image source = {this.props.photo} style = {style.imagen}/>
                 {this.state.liked === false ?
@@ -135,7 +137,7 @@ export default class Post extends Component{
             data = {this.props.comments}
             keyExtractor = {item => item.toString()}
             renderItem = {({item}) => <View style={style.container}>
-                <Text>Comentario: {item}
+                <Text>Comentario: {item.comment}
                     Usuario: {item.owner}</Text></View>}
             />
             <TextInput
