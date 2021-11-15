@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View, TextInput, FlatList } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View, TextInput, FlatList, Button } from "react-native";
 import { db, auth } from '../firebase/config'
 import firebase from 'firebase';
+import {Modal} from "react-native"
 
 
 export default class Post extends Component{
@@ -11,7 +12,8 @@ export default class Post extends Component{
             likes: 0,
             liked: false,
             comments: '',
-            comented: false
+            comented: false,
+            showModal: false
         }
     }
     componentDidMount(){
@@ -85,6 +87,20 @@ export default class Post extends Component{
             console.error("Error updating document: ", error);
         });
     }
+
+   verComentarios(){
+       this.setState({
+           showModal: true
+       })
+   }
+
+   cerrarModal(){
+    this.setState({
+        showModal: false
+    })
+   }
+
+
     render(){
         console.log(this.props);
         return(
@@ -102,11 +118,25 @@ export default class Post extends Component{
                 </TouchableOpacity>
                 }
             <Text>Likes: {this.state.likes}</Text>
+            {this.props.comments.length == 0?
+            <View>
+            <Text>No hay comentarios en esta publicacion. Podes ser el primero!</Text>
+            <TouchableOpacity onPress={()=>this.verComentarios()}><Text>Comentá</Text></TouchableOpacity>
+                </View>
+            :
+            
+            <TouchableOpacity onPress={()=>this.verComentarios()}><Text>Ver comentarios</Text></TouchableOpacity>
+            }
+            {this.state.showModal?
+            <Modal visible={this.state.showModal} animationType="fade" transparent={false}>
+
             <Text>Comentarios: </Text>
             <FlatList 
             data = {this.props.comments}
             keyExtractor = {item => item.toString()}
-            renderItem = {({item}) => <Text>{item}</Text>}
+            renderItem = {({item}) => <View style={style.container}>
+                <Text>Comentario: {item}
+                    Usuario: {item.owner}</Text></View>}
             />
             <TextInput
                     style={style.field}
@@ -117,9 +147,24 @@ export default class Post extends Component{
                     onChangeText={text => this.setState({ comments: text })}
                     value = {this.state.comments}
                     />
-            <TouchableOpacity style={style.botonLike} onPress={()=>this.comentando()}>
+                    {this.state.comments == ""?
+                     <TouchableOpacity style={style.botonLikeGris}>
+                     <Text>Comentar</Text>
+                 </TouchableOpacity> :
+
+                 <TouchableOpacity style={style.botonLike} onPress={()=>this.comentando()}>
                     <Text>Comentar</Text>
                 </TouchableOpacity>
+                    }
+           
+                
+                <TouchableOpacity style={style.botonLike} onPress={()=>this.cerrarModal()}>
+                    <Text>Cerrar</Text>
+                </TouchableOpacity>   
+
+            </Modal> :
+            <Text></Text>
+        }
             </View>
         )
     }
@@ -177,5 +222,20 @@ const style = StyleSheet.create({
         width: '80%',
         position: 'relative',
         marginLeft: 34
+    },
+
+    botonLikeGris: {
+        backgroundColor: 'grey',
+        // paddingHorizontal: 10,
+        paddingVertical: 6,
+        textAlign: 'center',
+        borderRadius: 4,
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderColor: '#28a745',
+        width: '40%',
+        marginTop: 10,
+        marginLeft: 104,
+        marginBottom: 8
     }
 })

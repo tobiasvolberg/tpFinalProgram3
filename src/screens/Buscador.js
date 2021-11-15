@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, TextInput, TouchableOpacity, View, FlatList, Text } from "react-native";
+import { StyleSheet, TextInput, TouchableOpacity, View, FlatList, Text, Image } from "react-native";
 import {db} from '../firebase/config'
 
 export default class Buscador extends Component{
@@ -11,9 +11,9 @@ export default class Buscador extends Component{
         }
     }
 
-    buscar(){
+    buscar(text){
         db.collection('posts')
-        .where('email','==',this.state.buscador)
+        .where('email','==',text)
         .onSnapshot(
             docs => {
                 let posts = []
@@ -37,17 +37,16 @@ export default class Buscador extends Component{
                 <TextInput 
                 style={styles.field}
                 placeholder="Ingrese un Mail para buscar"
-                onChangeText={text => this.setState({ buscador: text })}
+                onChangeText={text => this.buscar(text)}
                 />
-                <TouchableOpacity onPress = {this.buscar()}>
-                    {/* <Text>Buscar</Text> */}
-                </TouchableOpacity>
+              
                {this.state.posteos.length == 0?
                <Text> El usuario no existe o no tiene ninguna publicación</Text> :
                <FlatList 
                    data = {this.state.posteos}
                    keyExtractor = {item => item.id.toString()}
-                   renderItem = {({item}) => <Text>{item.data.description}</Text> }
+                   renderItem = {({item}) => <View style={styles.container}> <Text>{item.data.description}</Text> 
+                    <Image source={item.data.photo}  style={styles.imagen}/> </View>}
                /> 
             
             }
@@ -67,5 +66,21 @@ const styles = StyleSheet.create({
         borderStyle: 'solid',
         borderRadius: 6,
         marginVertical: 10
+    },
+
+    imagen:{
+        height: 205,
+        width: '80%',
+        position: 'relative',
+        marginLeft: 34
+    },
+
+    container: {
+        textAlign:'center',
+        padding: 10,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderStyle: 'solid',
+        borderRadius: 6,
     }
 })
