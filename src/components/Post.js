@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View, TextInput } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View, TextInput, FlatList } from "react-native";
 import { db, auth } from '../firebase/config'
 import firebase from 'firebase';
 
@@ -31,9 +31,7 @@ export default class Post extends Component{
                     comented:true,
                 })
             }
-            this.setState({
-                comments: this.props.comments
-            })
+            
         }
     }
 
@@ -74,12 +72,12 @@ export default class Post extends Component{
     comentando(){
         let comentarios = db.collection("posts").doc(this.props.id)
         return comentarios.update({
-            comments: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email)
+            comments: firebase.firestore.FieldValue.arrayUnion(this.state.comments)
         })
         .then(() => {
             console.log("Comentario okey!");
             this.setState({
-                comments: this.state.comments,
+                comments: '',
                 comented: true
             })
         })
@@ -104,7 +102,12 @@ export default class Post extends Component{
                 </TouchableOpacity>
                 }
             <Text>Likes: {this.state.likes}</Text>
-            <Text>Comentarios: {this.state.comments}</Text>
+            <Text>Comentarios: </Text>
+            <FlatList 
+            data = {this.props.comments}
+            keyExtractor = {item => item.toString()}
+            renderItem = {({item}) => <Text>{item}</Text>}
+            />
             <TextInput
                     style={style.field}
                     keyboardType='default'
