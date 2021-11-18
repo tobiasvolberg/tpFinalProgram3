@@ -7,7 +7,7 @@ import CreatePost from './CreatePost';
 import Profile from './Profile';
 import { auth } from '../firebase/config';
 import Home from './Home';
-import Buscador from './Buscador'
+import Buscador from './Buscador';
 
 export default class Menu extends Component {
     constructor(props){
@@ -93,14 +93,14 @@ export default class Menu extends Component {
             <Drawer.Navigator>
                 {this.state.loggedIn === true ?
                 <React.Fragment>
-              <Drawer.Screen name='Home' component={()=><Home />}></Drawer.Screen>
-              <Drawer.Screen name="Profile">
+              <Drawer.Screen name='Inicio' component={()=><Home />}></Drawer.Screen>
+              <Drawer.Screen name="Perfil">
                   {props => <Profile {...props} fecha={this.state.fecha} mail={this.state.mail}
                   ultFecha={this.state.ultFecha} username={this.state.username}
                   unLog={()=>this.unLog()}
                   />}
               </Drawer.Screen>
-              <Drawer.Screen name='Create Post'>
+              <Drawer.Screen name='Subir Posteo'>
                   {props => <CreatePost {...props}/>}
               </Drawer.Screen>
               <Drawer.Screen name='Buscador'>
@@ -109,7 +109,7 @@ export default class Menu extends Component {
               </React.Fragment>
               :
               <React.Fragment>
-                  <Drawer.Screen name="Login">
+                  <Drawer.Screen name="Iniciar Sesión">
                   {props => <Login {...props} handleLogin={(email,password)=>this.handleLogin(email,password)}
                   />}
                   </Drawer.Screen>

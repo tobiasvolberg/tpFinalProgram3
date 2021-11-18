@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, TextInput, TouchableOpacity, View, StyleSheet} from 'react-native';
+import Register from './Register';
 
 export default class Login extends Component {
     constructor(props) {
@@ -16,7 +17,7 @@ export default class Login extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>Login</Text>
+                <Text>Ingresa tus datos abajo!</Text>
                 <TextInput
                     style={styles.field}
                     keyboardType="email-address"
@@ -34,16 +35,21 @@ export default class Login extends Component {
                 {this.state.email=='' || this.state.password=='' ?
                 
                 <TouchableOpacity style = {styles.buttongris}>
-                    <Text style = {styles.text}> Iniciar sesion </Text>
+                    <Text style = {styles.text}> Iniciar Sesión </Text>
                 </TouchableOpacity>
 
                 :
                 
                 <TouchableOpacity style = {styles.button} onPress={() => this.props.handleLogin(this.state.email,this.state.password)}>
-                    <Text style = {styles.text}> Iniciar sesion </Text>
+                    <Text style = {styles.text}> Iniciar Sesión </Text>
                 </TouchableOpacity>
                 
                 }
+
+                <Text>¿No tenes una cuenta?</Text>
+                <TouchableOpacity style = {styles.button} onPress={() => this.props.navigation.navigate('Registro')}>
+                    <Text style = {styles.text}> Regístrate! </Text>
+                </TouchableOpacity>
 
             </View>
         )

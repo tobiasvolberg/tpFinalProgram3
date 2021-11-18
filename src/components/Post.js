@@ -3,6 +3,10 @@ import { Image, StyleSheet, Text, TouchableOpacity, View, TextInput, FlatList, B
 import { db, auth } from '../firebase/config'
 import firebase from 'firebase';
 import {Modal} from "react-native"
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+const BUTTON_SIZE = 30
+const BORDER_WIDTH = 1
 
 
 export default class Post extends Component{
@@ -113,32 +117,31 @@ export default class Post extends Component{
                 <Image source = {this.props.photo} style = {style.imagen}/>
                 {this.state.liked === false ?
                 <TouchableOpacity style={style.botonLike} onPress={()=>this.likeando()}>
-                    <Text>Me gusta</Text>
+                    <Text>{this.state.likes} <Icon name={'heart'} size={BUTTON_SIZE/2} /> </Text>
                 </TouchableOpacity>:
                 <TouchableOpacity style={style.botonDeslike} onPress={()=>this.deslikeando()}>
-                    <Text>Deslikear</Text>
+                    <Text>{this.state.likes} <Icon name={'heart'} size={BUTTON_SIZE/2} /></Text>
                 </TouchableOpacity>
                 }
-            <Text>Likes: {this.state.likes}</Text>
             {this.props.comments.length == 0?
             <View>
-            <Text>No hay comentarios en esta publicacion. Podes ser el primero!</Text>
-            <TouchableOpacity onPress={()=>this.verComentarios()}><Text>Comentá</Text></TouchableOpacity>
+            <TouchableOpacity style={style.botonLikeGris} onPress={()=>this.verComentarios()}><Icon name={'message'} size={BUTTON_SIZE/2} /></TouchableOpacity>
                 </View>
             :
             
-            <TouchableOpacity onPress={()=>this.verComentarios()}><Text>Ver comentarios</Text></TouchableOpacity>
+            <TouchableOpacity style={style.botonLikeGris} onPress={()=>this.verComentarios()}><Icon name={'message'} size={BUTTON_SIZE/2} /></TouchableOpacity>
             }
             {this.state.showModal?
             <Modal visible={this.state.showModal} animationType="fade" transparent={false}>
 
-            <Text>Comentarios: </Text>
+            <Text>Comentarios: 
+            </Text>
             <FlatList 
             data = {this.props.comments}
             keyExtractor = {item => item.toString()}
             renderItem = {({item}) => <View style={style.container}>
-                <Text>Comentario: {item.comment}
-                    Usuario: {item.owner}</Text></View>}
+                <Text>Comentario: {item.comment} </Text>
+                <Text>Usuario: {item.owner}</Text></View>}
             />
             <TextInput
                     style={style.field}
@@ -160,9 +163,9 @@ export default class Post extends Component{
                     }
            
                 
-                <TouchableOpacity style={style.botonLike} onPress={()=>this.cerrarModal()}>
-                    <Text>Cerrar</Text>
-                </TouchableOpacity>   
+                <TouchableOpacity onPress={()=>this.cerrarModal()} style={[style.button,{backgroundColor:'white'}]}>
+                <Icon name={'close'} size={BUTTON_SIZE/2} />
+                </TouchableOpacity>
 
             </Modal> :
             <Text></Text>
@@ -182,6 +185,14 @@ const style = StyleSheet.create({
         borderStyle: 'solid',
         borderRadius: 6,
     },
+    button:{
+        justifyContent:'center',
+        alignItems:'center',
+        width:BUTTON_SIZE+BORDER_WIDTH,
+        height:BUTTON_SIZE+BORDER_WIDTH,
+        borderWidth:BORDER_WIDTH,
+        borderRadius:BUTTON_SIZE/2,
+    },
     botonLike: {
         backgroundColor: '#28a745',
         // paddingHorizontal: 10,
@@ -191,10 +202,13 @@ const style = StyleSheet.create({
         borderWidth: 1,
         borderStyle: 'solid',
         borderColor: '#28a745',
-        width: '40%',
+        width: '13%',
         marginTop: 10,
         marginLeft: 104,
-        marginBottom: 8
+        marginBottom: 8,
+        position: 'relative',
+        top: 3,
+        right: -20
     },
     botonDeslike: {
         backgroundColor: 'red',
@@ -204,11 +218,14 @@ const style = StyleSheet.create({
         borderRadius: 4,
         borderWidth: 1,
         borderStyle: 'solid',
-        borderColor: '#28a745',
-        width: '40%',
+        borderColor: 'red',
+        width: '13%',
         marginTop: 10,
         marginLeft: 104,
-        marginBottom: 8
+        marginBottom: 8,
+        position: 'relative',
+        top: 3,
+        right: -20
     },
     field: {
         paddingVertical: 15,
@@ -234,10 +251,13 @@ const style = StyleSheet.create({
         borderRadius: 4,
         borderWidth: 1,
         borderStyle: 'solid',
-        borderColor: '#28a745',
-        width: '40%',
+        borderColor: 'grey',
+        width: '13%',
         marginTop: 10,
         marginLeft: 104,
-        marginBottom: 8
+        marginBottom: 8,
+        position: 'relative',
+        top: -45,
+        right: -80
     }
 })
