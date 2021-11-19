@@ -57,7 +57,7 @@ export default class Register extends Component {
                     
                     <Text>¿Ya tenes una cuenta?</Text>
                     <TouchableOpacity style = {style.boton} onPress={() => this.props.navigation.navigate('Iniciar Sesión')}>
-                    <Text> Iniciar Sesión! </Text>
+                    <Text style={style.textoSesion}> Iniciar Sesión! </Text>
                     </TouchableOpacity>
 
 
@@ -74,6 +74,7 @@ const style = StyleSheet.create({
         paddingHorizontal: 10,
         marginTop: 20
     },
+    textoSesion:{color:'white'},
     textInput: {
         height: 20,
         paddingVertical: 15,
@@ -92,7 +93,7 @@ const style = StyleSheet.create({
         borderRadius: 4,
         borderWidth: 1,
         borderStyle: 'solid',
-        borderColor: '#28a745'
+        borderColor: '#28a745',
     },
     botongris: {
         backgroundColor: 'grey',

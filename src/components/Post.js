@@ -133,7 +133,10 @@ export default class Post extends Component{
             }
             {this.state.showModal?
             <Modal visible={this.state.showModal} animationType="fade" transparent={false}>
-
+            <TouchableOpacity onPress={()=>this.cerrarModal()} style={[style.button,{backgroundColor:'white'}]}>
+                <Icon name={'close'} size={BUTTON_SIZE/2} />
+                </TouchableOpacity>
+            
             <Text>Comentarios: 
             </Text>
             <FlatList 
@@ -143,6 +146,8 @@ export default class Post extends Component{
                 <Text>Comentario: {item.comment} </Text>
                 <Text>Usuario: {item.owner}</Text></View>}
             />
+           
+            <View style={style.containerField}>
             <TextInput
                     style={style.field}
                     keyboardType='default'
@@ -151,21 +156,19 @@ export default class Post extends Component{
                     numberOfLines = {4}
                     onChangeText={text => this.setState({ comments: text })}
                     value = {this.state.comments}
-                    />
+                    /></View>
                     {this.state.comments == ""?
-                     <TouchableOpacity style={style.botonLikeGris}>
+                     <TouchableOpacity style={style.botonComentargris}>
                      <Text>Comentar</Text>
                  </TouchableOpacity> :
 
-                 <TouchableOpacity style={style.botonLike} onPress={()=>this.comentando()}>
+                 <TouchableOpacity style={style.botonComentar} onPress={()=>this.comentando()}>
                     <Text>Comentar</Text>
                 </TouchableOpacity>
                     }
            
                 
-                <TouchableOpacity onPress={()=>this.cerrarModal()} style={[style.button,{backgroundColor:'white'}]}>
-                <Icon name={'close'} size={BUTTON_SIZE/2} />
-                </TouchableOpacity>
+                
 
             </Modal> :
             <Text></Text>
@@ -192,6 +195,8 @@ const style = StyleSheet.create({
         height:BUTTON_SIZE+BORDER_WIDTH,
         borderWidth:BORDER_WIDTH,
         borderRadius:BUTTON_SIZE/2,
+        position: 'relative',
+        right: '-90%',
     },
     botonLike: {
         backgroundColor: '#28a745',
@@ -228,7 +233,7 @@ const style = StyleSheet.create({
         right: -20
     },
     field: {
-        paddingVertical: 15,
+        paddingVertical: 20,
         paddingHorizontal:10,
         borderWidth: 1,
         borderColor: '#ccc',
@@ -242,7 +247,6 @@ const style = StyleSheet.create({
         position: 'relative',
         marginLeft: 34
     },
-
     botonLikeGris: {
         backgroundColor: 'grey',
         // paddingHorizontal: 10,
@@ -259,5 +263,39 @@ const style = StyleSheet.create({
         position: 'relative',
         top: -45,
         right: -80
+    },
+    botonComentargris: {
+        backgroundColor: 'grey',
+        // paddingHorizontal: 10,
+        paddingVertical: 6,
+        textAlign: 'center',
+        borderRadius: 4,
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderColor: 'grey',
+        width: '40%',
+        marginTop: 10,
+        marginLeft: 104,
+        marginBottom: 8,
+        position: 'relative',
+        top: -14,
+        right: -12
+    },
+    botonComentar: {
+        backgroundColor: '#28a745',
+        // paddingHorizontal: 10,
+        paddingVertical: 6,
+        textAlign: 'center',
+        borderRadius: 4,
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderColor: 'grey',
+        width: '40%',
+        marginTop: 10,
+        marginLeft: 104,
+        marginBottom: 8,
+        position: 'relative',
+        top: -14,
+        right: -12
     }
 })

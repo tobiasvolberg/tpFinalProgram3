@@ -13,7 +13,8 @@ const styles = StyleSheet.create({
     },
     container:{
         textAlign:'center',
-        padding: 10
+        padding: 10,
+        
     },
     image1: {
         height: 250

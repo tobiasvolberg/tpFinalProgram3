@@ -108,6 +108,8 @@ const style = StyleSheet.create({
         height: 205,
         width: '80%',
         position: 'relative',
-        marginLeft: 34
+        marginLeft: 34,
+        marginTop: 5,
+        marginBottom: 5
     }
 })
