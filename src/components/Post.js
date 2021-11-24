@@ -125,11 +125,11 @@ export default class Post extends Component{
                 }
             {this.props.comments.length == 0?
             <View>
-            <TouchableOpacity style={style.botonLikeGris} onPress={()=>this.verComentarios()}><Icon name={'message'} size={BUTTON_SIZE/2} /></TouchableOpacity>
+            <TouchableOpacity style={style.botonLikeGrisUno} onPress={()=>this.verComentarios()}><Icon name={'message'} size={BUTTON_SIZE/2} /></TouchableOpacity>
                 </View>
             :
             
-            <TouchableOpacity style={style.botonLikeGris} onPress={()=>this.verComentarios()}><Icon name={'message'} size={BUTTON_SIZE/2} /></TouchableOpacity>
+            <TouchableOpacity style={style.botonLikeGrisDos} onPress={()=>this.verComentarios()}><Icon name={'message'} size={BUTTON_SIZE/2} /></TouchableOpacity>
             }
             {this.state.showModal?
             <Modal visible={this.state.showModal} animationType="fade" transparent={false}>
@@ -256,6 +256,40 @@ const style = StyleSheet.create({
         borderWidth: 1,
         borderStyle: 'solid',
         borderColor: 'grey',
+        width: '13%',
+        marginTop: 10,
+        marginLeft: 104,
+        marginBottom: 8,
+        position: 'relative',
+        top: -45,
+        right: -80
+    },
+    botonLikeGrisUno: {
+        backgroundColor: 'grey',
+        // paddingHorizontal: 10,
+        paddingVertical: 6,
+        textAlign: 'center',
+        borderRadius: 4,
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderColor: 'grey',
+        width: '13%',
+        marginTop: 10,
+        marginLeft: 104,
+        marginBottom: 8,
+        position: 'relative',
+        top: -45,
+        right: -80
+    },
+    botonLikeGrisDos: {
+        backgroundColor: '#28a745',
+        // paddingHorizontal: 10,
+        paddingVertical: 6,
+        textAlign: 'center',
+        borderRadius: 4,
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderColor: '#28a745',
         width: '13%',
         marginTop: 10,
         marginLeft: 104,

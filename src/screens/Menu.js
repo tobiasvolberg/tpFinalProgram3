@@ -9,6 +9,7 @@ import { auth } from '../firebase/config';
 import Home from './Home';
 import Buscador from './Buscador';
 
+
 export default class Menu extends Component {
     constructor(props){
         super(props)
