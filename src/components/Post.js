@@ -111,10 +111,11 @@ export default class Post extends Component{
         let d = new Date(this.props.createdAt)
         return(
             <View style = {style.container}>
-                <Text>Comentario: {this.props.description}</Text>
-                <Text>Dia creado: {d.toDateString()}</Text>
-                <Text>Usuario: {this.props.owner}</Text>
+                <Text style ={style.textoUsuario}>{this.props.owner}</Text>
+               
                 <Image source = {this.props.photo} style = {style.imagen}/>
+                <Text>{this.props.description}</Text>
+                <Text>{d.toDateString()}</Text>
                 {this.state.liked === false ?
                 <TouchableOpacity style={style.botonLike} onPress={()=>this.likeando()}>
                     <Text>{this.state.likes} <Icon name={'heart'} size={BUTTON_SIZE/2} /> </Text>
@@ -331,5 +332,9 @@ const style = StyleSheet.create({
         position: 'relative',
         top: -14,
         right: -12
+    },
+    textoUsuario: {
+        fontWeight: 'bold',
+        marginBottom: 7
     }
 })
