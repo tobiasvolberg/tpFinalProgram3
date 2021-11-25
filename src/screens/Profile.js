@@ -1,3 +1,4 @@
+import { CurrentRenderContext } from '@react-navigation/core'
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, FlatList, Image } from 'react-native'
 import { db } from '../firebase/config'
@@ -46,11 +47,11 @@ export default class Profile extends Component{
     render(){
         return(
             <View>
-                <Text>El nombre del usuario es: {this.props.username}</Text>
-                <Text>El email del usuario es: {this.props.mail}</Text>
-                <Text>La fecha del ultimo login del usuario es: {this.props.ultFecha}</Text>
-                <Text>La fecha de alta del usuario es: {this.props.fecha}</Text>
-                <Text>Posteos realizados por el usuario: {this.state.posteos.length}</Text>
+                <Text style={style.nombrePerfil}>Nombre de Usuario:</Text><Text style={style.nombreDatos}>{this.props.username}</Text>
+                <Text style={style.nombrePerfil}>Email: </Text><Text style={style.nombreDatos}>{this.props.mail}</Text>
+                <Text style={style.nombrePerfil}>Ultimo login: </Text><Text style={style.nombreDatos}>{this.props.ultFecha}</Text>
+                <Text style={style.nombrePerfil}>Alta:</Text><Text style={style.nombreDatos}> {this.props.fecha}</Text>
+                <Text style={style.nombrePerfil}>Posteos :</Text><Text style={style.nombreDatos}> {this.state.posteos.length}</Text>
                 <FlatList
                 data = {this.state.posteos}
                 keyExtractor = {item => item.id.toString()}
@@ -111,5 +112,15 @@ const style = StyleSheet.create({
         marginLeft: 34,
         marginTop: 5,
         marginBottom: 5
+    },
+    nombrePerfil:{
+        fontWeight: 'bold',
+        alignSelf: 'center',
+        paddingTop: 6
+    },
+    nombreDatos:{
+        alignSelf: 'center',
+        paddingTop: 3
+
     }
 })

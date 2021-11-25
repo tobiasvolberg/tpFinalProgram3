@@ -144,8 +144,8 @@ export default class Post extends Component{
             data = {this.props.comments}
             keyExtractor = {item => item.toString()}
             renderItem = {({item}) => <View style={style.container}>
-                <Text>Comentario: {item.comment} </Text>
-                <Text>Usuario: {item.owner}</Text></View>}
+                <Text>{item.comment} </Text>
+                <Text style={style.textoComentario}>{item.owner}</Text></View>}
             />
            
             <View style={style.containerField}>
@@ -336,5 +336,8 @@ const style = StyleSheet.create({
     textoUsuario: {
         fontWeight: 'bold',
         marginBottom: 7
+    },
+    textoComentario:{
+        fontWeight: 'bold'
     }
 })
