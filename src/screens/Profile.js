@@ -37,7 +37,7 @@ export default class Profile extends Component{
     borrarPost(item){
         console.log(item);
         db.collection("posts").doc(item.id).delete().then(() => {
-            alert('estas borrando tu posteo')
+            alert('Posteo eliminado con exito')
         }).catch((error) => {
             alert("Error: ", error);
         });

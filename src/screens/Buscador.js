@@ -36,6 +36,7 @@ export default class Buscador extends Component{
             <View>
                 <TextInput 
                 style={styles.field}
+                keyboardType='email-address'
                 placeholder="Ingrese un Mail para buscar"
                 onChangeText={text => this.buscar(text)}
                 />
